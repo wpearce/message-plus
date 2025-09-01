@@ -15,7 +15,8 @@ class TemplateController {
         return listOf(
             TemplateDto(1, "Welcome", "Hello and welcome to our service!"),
             TemplateDto(2, "Reminder", "Don’t forget your appointment tomorrow."),
-            TemplateDto(3, "ThankYou", "Thanks for choosing us!")
+            TemplateDto(3, "ThankYou", "Thanks for choosing us!"),
+            TemplateDto(4, "Advisory", "New content")
         )
     }
 }
