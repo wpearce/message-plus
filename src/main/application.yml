@@ -13,16 +13,15 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update     # for dev; we’ll switch to Flyway later
-    defer-datasource-initialization: true
+      ddl-auto: none     # let flyway do the work
     open-in-view: false
     properties:
       hibernate:
         format_sql: true
     show-sql: true
-  sql:
-    init:
-      mode: always
+
+  flyway:
+    enabled: true
 
   h2:
     console:

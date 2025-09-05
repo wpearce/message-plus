@@ -1,4 +1,4 @@
-@messageId = 21
+@messageId = 1
 
 GET {{host}}/api/templates
 
