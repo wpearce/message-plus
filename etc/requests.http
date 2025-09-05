@@ -1,0 +1,24 @@
+@messageId = 21
+
+GET {{host}}/api/templates
+
+###
+POST {{host}}/api/templates
+Content-Type: application/json
+
+{
+  "name": "ThankYou3",
+  "body": "Thanks for choosing us added message!"
+}
+
+###
+PUT {{host}}/api/templates/{{messageId}}
+Content-Type: application/json
+
+{
+  "name": "New Title",
+  "body": "Completely new message"
+}
+
+####
+DELETE {{host}}/api/templates/{{messageId}}
