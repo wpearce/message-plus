@@ -31,6 +31,8 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
+    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
