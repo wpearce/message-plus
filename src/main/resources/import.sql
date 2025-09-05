@@ -1,0 +1,2 @@
+insert into message_template(title, body, created_at, updated_at) values ('Welcome', 'Hello and welcome to our service!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+insert into message_template(title, body, created_at, updated_at) values ('Welcome 2', 'Hello and welcome to our service 2!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

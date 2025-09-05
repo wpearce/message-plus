@@ -1,0 +1,58 @@
+package com.topfloor.messageplus.api
+
+import com.topfloor.messageplus.api.dto.CreateUpdateMessageTemplateDto
+import com.topfloor.messageplus.api.dto.MessageTemplateDto
+import com.topfloor.messageplus.api.dto.toDto
+import com.topfloor.messageplus.app.MessageTemplateService
+import jakarta.persistence.EntityNotFoundException
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.ExceptionHandler
+
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+@RequestMapping("/api/templates")
+class MessageTemplateController(
+    private val service: MessageTemplateService
+) {
+    @GetMapping
+    fun list(@RequestParam(required = false) q: String?): List<MessageTemplateDto> =
+        service.list(q).map { it.toDto() }
+
+    @GetMapping("/{id}")
+    fun get(@PathVariable id: Long): MessageTemplateDto =
+        service.get(id).toDto()
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun create(@RequestBody req: CreateUpdateMessageTemplateDto): MessageTemplateDto =
+        service.create(req).toDto()
+
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Long, @RequestBody req: CreateUpdateMessageTemplateDto): MessageTemplateDto =
+        service.update(id, req).toDto()
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable id: Long) =
+        service.delete(id)
+
+    @ExceptionHandler(EntityNotFoundException::class)
+    fun notFound(ex: EntityNotFoundException) =
+        ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("error" to ex.message))
+
+    @ExceptionHandler(IllegalStateException::class)
+    fun conflict(ex: IllegalStateException) =
+        ResponseEntity.status(HttpStatus.CONFLICT).body(mapOf("error" to ex.message))
+
+}
