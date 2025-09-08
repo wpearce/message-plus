@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/templates")
@@ -30,7 +31,7 @@ class MessageTemplateController(
         service.list(q).map { it.toDto() }
 
     @GetMapping("/{id}")
-    fun get(@PathVariable id: Long): MessageTemplateDto =
+    fun get(@PathVariable id: UUID): MessageTemplateDto =
         service.get(id).toDto()
 
     @PostMapping
@@ -39,12 +40,12 @@ class MessageTemplateController(
         service.create(req).toDto()
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody req: CreateUpdateMessageTemplateDto): MessageTemplateDto =
+    fun update(@PathVariable id: UUID, @RequestBody req: CreateUpdateMessageTemplateDto): MessageTemplateDto =
         service.update(id, req).toDto()
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: Long) =
+    fun delete(@PathVariable id: UUID) =
         service.delete(id)
 
     @ExceptionHandler(EntityNotFoundException::class)

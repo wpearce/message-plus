@@ -3,20 +3,23 @@ package com.topfloor.messageplus.domain
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import org.hibernate.annotations.UuidGenerator
 import java.time.Instant
+import java.util.UUID
 
 @Entity
 @Table(name = "message_template")
 class MessageTemplate(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    @GeneratedValue                 // tell Hibernate it's generated
+    @UuidGenerator                  // Hibernate’s UUID generator
+    @Column(name = "id", columnDefinition = "uuid", updatable = false, nullable = false)
+    var id: UUID? = null,
 
     @Column(nullable = false, unique = true, length = 120)
     var title: String,
 
-    @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     var body: String,
 
     @CreationTimestamp

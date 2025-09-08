@@ -2,9 +2,10 @@ package com.topfloor.messageplus.api.dto
 
 import com.topfloor.messageplus.domain.MessageTemplate
 import java.time.Instant
+import java.util.UUID
 
 data class MessageTemplateDto(
-    val id: Long,
+    val id: UUID,
     val title: String,
     val body: String,
     val createdAt: Instant?,

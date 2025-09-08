@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: message-plus
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/message_plus
+    username: app
+    password: app
+
+  jpa:
+    show-sql: true

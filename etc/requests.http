@@ -1,4 +1,4 @@
-@messageId = 1
+@messageId = 0fffa1dd-af7d-4bad-afc2-f75bc0867da2
 
 GET {{host}}/api/templates
 
@@ -7,7 +7,7 @@ POST {{host}}/api/templates
 Content-Type: application/json
 
 {
-  "name": "ThankYou3",
+  "name": "ThankYou5",
   "body": "Thanks for choosing us added message!"
 }
 
@@ -22,3 +22,6 @@ Content-Type: application/json
 
 ####
 DELETE {{host}}/api/templates/{{messageId}}
+
+####
+GET {{host}}/actuator/health

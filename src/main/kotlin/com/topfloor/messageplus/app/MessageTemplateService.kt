@@ -6,6 +6,7 @@ import com.topfloor.messageplus.domain.MessageTemplateRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import jakarta.persistence.EntityNotFoundException
+import java.util.UUID
 
 @Service
 class MessageTemplateService(
@@ -17,7 +18,7 @@ class MessageTemplateService(
         if (q.isNullOrBlank()) repo.findAll() else repo.findByTitleContainingIgnoreCase(q)
 
     @Transactional(readOnly = true)
-    fun get(id: Long): MessageTemplate =
+    fun get(id: UUID): MessageTemplate =
         repo.findById(id).orElseThrow { EntityNotFoundException("Template $id not found") }
 
     @Transactional
@@ -29,7 +30,7 @@ class MessageTemplateService(
     }
 
     @Transactional
-    fun update(id: Long, req: CreateUpdateMessageTemplateDto): MessageTemplate {
+    fun update(id: UUID, req: CreateUpdateMessageTemplateDto): MessageTemplate {
         val template = get(id)
         // prevent duplicate names on other rows
         if (!template.title.equals(req.name, ignoreCase = true) && repo.existsByTitleIgnoreCase(req.name)) {
@@ -41,7 +42,7 @@ class MessageTemplateService(
     }
 
     @Transactional
-    fun delete(id: Long) {
+    fun delete(id: UUID) {
         if (!repo.existsById(id)) throw EntityNotFoundException("Template $id not found")
         repo.deleteById(id)
     }
