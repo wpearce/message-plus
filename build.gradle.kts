@@ -31,6 +31,9 @@ dependencies {
     implementation("org.flywaydb:flyway-core:$flywayVer")
     implementation("org.flywaydb:flyway-database-postgresql:$flywayVer")
 
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

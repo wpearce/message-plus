@@ -1,6 +1,8 @@
 @messageId = 0fffa1dd-af7d-4bad-afc2-f75bc0867dee
+@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzU3ODIzMjE1LCJpYXQiOjE3NTc3ODAwMTUsIm5iZiI6MTc1Nzc4MDAxNSwiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzM3Njk4NTQxMjEwMjEzMDM5LWF0XzMzNzY5ODU0MTIxMDI3ODU3NSJ9.iPwjt8XIV83Oo067ci9FysmQkvplpFrbM28l5OacEv4Pl4Cgi60aSrAk5L-w1pHIzr8kdKwYrwrVF5QHy827_SKpU9kS3hMQCgRWran8guQWSO2-Hxp2Su968aQd9dQ0WPBSc0whfD44idSN5fD2IA637mzTzr0-CgwzFV8YLJSKhpg-zeh6s_TxI9D8O-7lvgIl29dJ6pDa0Kb_Hbx7moSJ4c_03_raVDAjx_a8IcTGi732tvs85f7tO8hpdJcUQCbsdIrKORHmESfJITM2FRUj_kuNwfyZHKd2Ynm815COXG6Wbodid38W9V88KM5vJ554PfY0kls9w-MDtgtuzw
 
 GET {{host}}/api/templates
+Authorization: Bearer {{token}}
 
 ###
 POST {{host}}/api/templates
@@ -25,3 +27,10 @@ DELETE {{host}}/api/templates/{{messageId}}
 
 ####
 GET {{host}}/actuator/health
+
+####
+POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/device_authorization?client_id=337691614870836838&scope=pearce.oliver@gmail.com
+
+####
+POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/token?grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=kSzY1mkAYswSWgASBQ0Uog&client_id=337691614870836838
+Content-Type:application/x-www-form-urlencoded

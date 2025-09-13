@@ -17,5 +17,11 @@ spring:
   flyway:
     enabled: true
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/keys
+
 management:
   endpoints.web.exposure.include: health,info
