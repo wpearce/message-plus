@@ -22,6 +22,9 @@ class MessageTemplate(
     @Column(nullable = false, columnDefinition = "text")
     var bodyPt: String,
 
+    @Column(nullable = true, columnDefinition = "text")
+    var bodyEn: String,
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     var createdAt: Instant? = null,

@@ -26,7 +26,7 @@ class MessageTemplateService(
         if (repo.existsByTitleIgnoreCase(req.name)) {
             error("Template name already exists: ${req.name}")
         }
-        return repo.save(MessageTemplate(title = req.name.trim(), bodyPt = req.bodyPt))
+        return repo.save(MessageTemplate(title = req.name.trim(), bodyPt = req.bodyPt, bodyEn = req.bodyEn))
     }
 
     @Transactional
@@ -38,6 +38,7 @@ class MessageTemplateService(
         }
         template.title = req.name.trim()
         template.bodyPt = req.bodyPt
+        template.bodyEn = req.bodyEn
         return repo.save(template)
     }
 

@@ -32,6 +32,7 @@ class MessageTemplateControllerTest(
             id = UUID.randomUUID(),
             title = "ThankYou",
             bodyPt = "Thanks for choosing us!",
+            bodyEn = "Thanks for choosing us!",
             createdAt = now,
             updatedAt = now
         )

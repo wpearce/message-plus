@@ -1,0 +1,1 @@
+ALTER TABLE message_template ADD COLUMN body_en TEXT;
