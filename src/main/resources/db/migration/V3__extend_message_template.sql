@@ -1,0 +1,1 @@
+ALTER TABLE message_template RENAME COLUMN body TO body_pt;

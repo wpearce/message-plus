@@ -12,6 +12,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.time.Instant
+import java.util.UUID
 
 @WebMvcTest(MessageTemplateController::class)
 class MessageTemplateControllerTest(
@@ -28,14 +29,14 @@ class MessageTemplateControllerTest(
         val now = Instant.parse("2025-09-01T12:00:00Z")
 
         val entity = MessageTemplate(
-            id = 1L,
+            id = UUID.randomUUID(),
             title = "ThankYou",
-            body = "Thanks for choosing us!",
+            bodyPt = "Thanks for choosing us!",
             createdAt = now,
             updatedAt = now
         )
 
-        every { service.get(1L) } returns entity
+        every { service.get(UUID.randomUUID()) } returns entity
 
         mockMvc.get("/api/templates/1") {
             accept = MediaType.APPLICATION_JSON
@@ -51,7 +52,7 @@ class MessageTemplateControllerTest(
 
     @Test
     fun `GET by id returns 404 with error body when not found`() {
-        every { service.get(99L) } throws EntityNotFoundException("MessageTemplate 99 not found")
+        every { service.get(UUID.randomUUID()) } throws EntityNotFoundException("MessageTemplate 99 not found")
 
         mockMvc.get("/api/templates/99") {
             accept = MediaType.APPLICATION_JSON

@@ -20,7 +20,7 @@ class MessageTemplate(
     var title: String,
 
     @Column(nullable = false, columnDefinition = "text")
-    var body: String,
+    var bodyPt: String,
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

@@ -7,20 +7,20 @@ import java.util.UUID
 data class MessageTemplateDto(
     val id: UUID,
     val title: String,
-    val body: String,
+    val bodyPt: String,
     val createdAt: Instant?,
     val updatedAt: Instant?
 )
 
 data class CreateUpdateMessageTemplateDto(
     val name: String,
-    val body: String
+    val bodyPt: String
 )
 
 fun MessageTemplate.toDto() = MessageTemplateDto(
     id = requireNotNull(id),
     title = title,
-    body = body,
+    bodyPt = bodyPt,
     createdAt = createdAt,
     updatedAt = updatedAt
 )
