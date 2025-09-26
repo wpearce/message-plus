@@ -4,6 +4,7 @@ import com.topfloor.messageplus.api.dto.CreateUpdateMessageTemplateDto
 import com.topfloor.messageplus.api.dto.MessageTemplateDto
 import com.topfloor.messageplus.api.dto.toDto
 import com.topfloor.messageplus.app.MessageTemplateService
+import com.topfloor.messageplus.app.TaggingService
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -24,7 +25,8 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/templates")
 class MessageTemplateController(
-    private val service: MessageTemplateService
+    private val service: MessageTemplateService,
+    private val taggingService: TaggingService
 ) {
     @GetMapping
     fun list(@RequestParam(required = false) q: String?): List<MessageTemplateDto> =
@@ -56,4 +58,15 @@ class MessageTemplateController(
     fun conflict(ex: IllegalStateException) =
         ResponseEntity.status(HttpStatus.CONFLICT).body(mapOf("error" to ex.message))
 
+    @PostMapping("/{id}/tags/{tagId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun addTag(@PathVariable id: UUID, @PathVariable tagId: UUID) {
+        taggingService.addTag(id, tagId)
+    }
+
+    @DeleteMapping("/{id}/tags/{tagId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun removeTag(@PathVariable id: UUID, @PathVariable tagId: UUID) {
+        taggingService.removeTag(id, tagId)
+    }
 }

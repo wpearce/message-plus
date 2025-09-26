@@ -31,5 +31,13 @@ class MessageTemplate(
 
     @UpdateTimestamp
     @Column(nullable = false)
-    var updatedAt: Instant? = null
+    var updatedAt: Instant? = null,
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "message_template_tag",
+        joinColumns = [JoinColumn(name = "message_template_id")],
+        inverseJoinColumns = [JoinColumn(name = "tag_id")]
+    )
+    var tags: MutableSet<Tag> = linkedSetOf()
 )

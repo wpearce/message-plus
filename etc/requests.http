@@ -1,5 +1,5 @@
-@messageId = f18e83b3-15d0-43cb-8ffd-25abdc413b1d
-@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzU4Mjc1NTYwLCJpYXQiOjE3NTc4NDM1NjAsIm5iZiI6MTc1Nzg0MzU2MCwiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzM3ODA1MTUxODI3OTQyNTU5LWF0XzMzNzgwNTE1MTgyODAwODA5NSJ9.fKVYpDT8wtMAiDiJLp5E0uoGYgKk2fjdiuTUVaL_jQz15vJljtqFrsB4sF5joQr_LzIRuEp_-Z0pVVYRPzP-E5RJ_tJDs4xODaA3DVgQIqkYp1jsPVle15X98_7VIwYMIW2bsULnD6unnZuxjaIPELyotk7Lcs30PB7-ewzKkUcPEHPzz02-c6c2YPXn1v-syqECwcmjc6vcZ9T-dQwHwi5IPsyAId6XE3rywFDa9xFnyi6hKoQwePc26MG6eNWAlR1i-eHNkoTkLSpuvFKlOZVuasr56DgFnpM3yWsbJ6zp4GjkWGOMpYiYzJAabNx6Gd0NBmSyBwlLo67wtOvOoQ
+@messageId = 32baf668-271e-4ea9-a7b4-ab7ffc2df3b8
+@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzU5MjU1NjI3LCJpYXQiOjE3NTg4MjM2MjcsIm5iZiI6MTc1ODgyMzYyNywiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzM5NDQ5NDMwNjQ4MzMwMzIxLWF0XzMzOTQ0OTQzMDY0ODM5NTg1NyJ9.Rtrxy6Duw1XuSeCdIGX4mJXaBQreUJI84Sq3w7soMAfCNJMEUqc9VDqap7HptH7lN4KOPeKFL4L0XvQuJjUIlZPFH0WYckDswRT1kKAfVzSveglnlYtHGJyINFKLNA-IywNkLwLCT3rJNlRhwUCJ804d-OwXgXCwZ1qCdj71sCLnSUyDjKnQe6sTqa_5olRuOd-2JstnVAEIBed3fKNor7Zaaimt076fBSMDu0kZbA_J9qF6YBf1lJfHhnkM1u3SL0wJZXnn8d50w_kULMexLpKoBR-qRcEA_WQdpcjR-aX-xAgXPSFcEHQhvfCUNlk4Xom1avwxnyxRdrkCWNEDAg
 
 GET {{host}}/api/templates
 Authorization: Bearer {{token}}
@@ -21,7 +21,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "New Title",
+  "name": "ThankYou10",
   "bodyPt": "Mensagem completamente nova",
   "bodyEn": "Completely new message"
 }
@@ -30,12 +30,24 @@ Authorization: Bearer {{token}}
 DELETE {{host}}/api/templates/{{messageId}}
 Authorization: Bearer {{token}}
 
+### list tags
+GET {{host}}/api/tags
+Authorization: Bearer {{token}}
+
+### link a tag
+POST {{host}}/api/templates/{{messageId}}/tags/a83695c2-8b50-4037-b223-a7fe99544fb9
+Authorization: Bearer {{token}}
+
+### unlink a tag
+DELETE {{host}}/api/templates/{{messageId}}/tags/a83695c2-8b50-4037-b223-a7fe99544fb9
+Authorization: Bearer {{token}}
+
 ####
 GET {{host}}/actuator/health
 
-####
+#### authorisation flow (device code)
 POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/device_authorization?client_id=337691614870836838&scope=pearce.oliver@gmail.com
 
 ####
-POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/token?grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=VVcDTYkSUr9x7rHHJ7Eklw&client_id=337691614870836838
+POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/token?grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=cb8kzNKpBV6bqx_Vhs4qFg&client_id=337691614870836838
 Content-Type:application/x-www-form-urlencoded

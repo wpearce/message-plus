@@ -10,7 +10,8 @@ data class MessageTemplateDto(
     val bodyPt: String,
     val bodyEn: String?,
     val createdAt: Instant?,
-    val updatedAt: Instant?
+    val updatedAt: Instant?,
+    val tags: List<TagDto> = emptyList()
 )
 
 data class CreateUpdateMessageTemplateDto(
@@ -25,5 +26,6 @@ fun MessageTemplate.toDto() = MessageTemplateDto(
     bodyPt = bodyPt,
     bodyEn = bodyEn,
     createdAt = createdAt,
-    updatedAt = updatedAt
+    updatedAt = updatedAt,
+    tags = tags.map { it.toDto() }.sortedBy { it.name }
 )
