@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.net.URI
 import java.util.UUID
 
 @RestController
@@ -38,8 +39,12 @@ class MessageTemplateController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody req: CreateUpdateMessageTemplateDto): MessageTemplateDto =
-        service.create(req).toDto()
+    fun create(@RequestBody req: CreateUpdateMessageTemplateDto): ResponseEntity<MessageTemplateDto> {
+        val saved = service.create(req)
+        return ResponseEntity
+            .created(URI.create("/api/templates/${saved.id}"))
+            .body(saved.toDto())
+    }
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: UUID, @RequestBody req: CreateUpdateMessageTemplateDto): MessageTemplateDto =

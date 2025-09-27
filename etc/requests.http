@@ -1,21 +1,23 @@
-@messageId = 32baf668-271e-4ea9-a7b4-ab7ffc2df3b8
+@messageId =78babd75-0076-431f-ab0f-0bb5f7fb1abb
+@tagId=6f730fbf-fa43-4cd7-86d0-88bb777a7641
 @token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzU5MjU1NjI3LCJpYXQiOjE3NTg4MjM2MjcsIm5iZiI6MTc1ODgyMzYyNywiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzM5NDQ5NDMwNjQ4MzMwMzIxLWF0XzMzOTQ0OTQzMDY0ODM5NTg1NyJ9.Rtrxy6Duw1XuSeCdIGX4mJXaBQreUJI84Sq3w7soMAfCNJMEUqc9VDqap7HptH7lN4KOPeKFL4L0XvQuJjUIlZPFH0WYckDswRT1kKAfVzSveglnlYtHGJyINFKLNA-IywNkLwLCT3rJNlRhwUCJ804d-OwXgXCwZ1qCdj71sCLnSUyDjKnQe6sTqa_5olRuOd-2JstnVAEIBed3fKNor7Zaaimt076fBSMDu0kZbA_J9qF6YBf1lJfHhnkM1u3SL0wJZXnn8d50w_kULMexLpKoBR-qRcEA_WQdpcjR-aX-xAgXPSFcEHQhvfCUNlk4Xom1avwxnyxRdrkCWNEDAg
 
+### list messages
 GET {{host}}/api/templates
 Authorization: Bearer {{token}}
 
-###
+### create message
 POST {{host}}/api/templates
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "ThankYou10",
+  "name": "DELETE THIS",
   "bodyPt": "Obrigado por sua preferencia",
   "bodyEn": "Thanks for choosing us!"
 }
 
-###
+### update message
 PUT {{host}}/api/templates/{{messageId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -26,7 +28,7 @@ Authorization: Bearer {{token}}
   "bodyEn": "Completely new message"
 }
 
-####
+#### delete message
 DELETE {{host}}/api/templates/{{messageId}}
 Authorization: Bearer {{token}}
 
@@ -34,12 +36,25 @@ Authorization: Bearer {{token}}
 GET {{host}}/api/tags
 Authorization: Bearer {{token}}
 
+### create tag
+POST {{host}}/api/tags
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "ADDITIONAL"
+}
+
+#### delete tag
+DELETE {{host}}/api/tags/{{tagId}}
+Authorization: Bearer {{token}}
+
 ### link a tag
-POST {{host}}/api/templates/{{messageId}}/tags/a83695c2-8b50-4037-b223-a7fe99544fb9
+POST {{host}}/api/templates/{{messageId}}/tags/0219fbfa-ad4c-4c4d-9ceb-5019f87b23f3
 Authorization: Bearer {{token}}
 
 ### unlink a tag
-DELETE {{host}}/api/templates/{{messageId}}/tags/a83695c2-8b50-4037-b223-a7fe99544fb9
+DELETE {{host}}/api/templates/{{messageId}}/tags/0219fbfa-ad4c-4c4d-9ceb-5019f87b23f3
 Authorization: Bearer {{token}}
 
 ####

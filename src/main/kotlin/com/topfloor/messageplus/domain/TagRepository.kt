@@ -5,4 +5,5 @@ import java.util.UUID
 
 interface TagRepository : JpaRepository<Tag, UUID> {
     fun findByNameIgnoreCase(name: String): Tag?
+    fun existsByNameIgnoreCase(name: String): Boolean
 }
