@@ -1,9 +1,21 @@
-@messageId =78babd75-0076-431f-ab0f-0bb5f7fb1abb
-@tagId=6f730fbf-fa43-4cd7-86d0-88bb777a7641
-@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzU5MjU1NjI3LCJpYXQiOjE3NTg4MjM2MjcsIm5iZiI6MTc1ODgyMzYyNywiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzM5NDQ5NDMwNjQ4MzMwMzIxLWF0XzMzOTQ0OTQzMDY0ODM5NTg1NyJ9.Rtrxy6Duw1XuSeCdIGX4mJXaBQreUJI84Sq3w7soMAfCNJMEUqc9VDqap7HptH7lN4KOPeKFL4L0XvQuJjUIlZPFH0WYckDswRT1kKAfVzSveglnlYtHGJyINFKLNA-IywNkLwLCT3rJNlRhwUCJ804d-OwXgXCwZ1qCdj71sCLnSUyDjKnQe6sTqa_5olRuOd-2JstnVAEIBed3fKNor7Zaaimt076fBSMDu0kZbA_J9qF6YBf1lJfHhnkM1u3SL0wJZXnn8d50w_kULMexLpKoBR-qRcEA_WQdpcjR-aX-xAgXPSFcEHQhvfCUNlk4Xom1avwxnyxRdrkCWNEDAg
+@messageId =ade0445a-78ef-49f2-8589-ab5581f6db42
+@tagId=0219fbfa-ad4c-4c4d-9ceb-5019f87b23f3
+@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzU5Njg5NDY0LCJpYXQiOjE3NTkyNTc0NjQsIm5iZiI6MTc1OTI1NzQ2NCwiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzQwMTc3Mjg4NjcyODY5MDgwLWF0XzM0MDE3NzI4ODY3MjkzNDYxNiJ9.Sz8QZqSIkrbD4JniYsqLkBzer6A2GtFVZ7EIDCSnv_ZSXogSGnFbNloYU5L6L5o1YiPvuZUQEUH5rvgX4oXTRCGa3fSAzHGOSGH18cYuRmcED5wwR7HkzrBwZeg4p3C44Rx2mnbrMPNKFiccafqhjgJsGPIbx5wI_xWHNI7ZNCUYFQpxHTrEhg-VAcRPp7OdWxYQfm5Ws-iqATiIBx5hdifAY6b0uPhuauNnziTz3pNoM7O3-oFe_rjcrf3Jc8OAZjA5htTRq1uEFdZKxbQ40gSfaSaC2fL8FymukxQCScDBo0Pmh8lGFjUfZX45AcQ31gjuxU_HyEYKFc-U6U3jkw
 
-### list messages
+### list all messages
+GET {{host}}/api/templates?paged=false
+Authorization: Bearer {{token}}
+
+### list messages that have all tags
+GET {{host}}/api/templates?paged=false&tagNames=WELCOME&tagNames=INFO
+Authorization: Bearer {{token}}
+
+### list all messages (paged)
 GET {{host}}/api/templates
+Authorization: Bearer {{token}}
+
+### list messages that have all tags (paged)
+GET {{host}}/api/templates?tagNames=WELCOME&tagNames=INFO
 Authorization: Bearer {{token}}
 
 ### create message
@@ -42,7 +54,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "ADDITIONAL"
+  "name": "GOODBYE"
 }
 
 #### delete tag
@@ -50,11 +62,11 @@ DELETE {{host}}/api/tags/{{tagId}}
 Authorization: Bearer {{token}}
 
 ### link a tag
-POST {{host}}/api/templates/{{messageId}}/tags/0219fbfa-ad4c-4c4d-9ceb-5019f87b23f3
+POST {{host}}/api/templates/{{messageId}}/tags/{{tagId}}
 Authorization: Bearer {{token}}
 
 ### unlink a tag
-DELETE {{host}}/api/templates/{{messageId}}/tags/0219fbfa-ad4c-4c4d-9ceb-5019f87b23f3
+DELETE {{host}}/api/templates/{{messageId}}/tags/{{tagId}}
 Authorization: Bearer {{token}}
 
 ####
@@ -64,5 +76,5 @@ GET {{host}}/actuator/health
 POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/device_authorization?client_id=337691614870836838&scope=pearce.oliver@gmail.com
 
 ####
-POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/token?grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=cb8kzNKpBV6bqx_Vhs4qFg&client_id=337691614870836838
+POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/token?grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=IMPP3PKIF_lWWYJej0sU5g&client_id=337691614870836838
 Content-Type:application/x-www-form-urlencoded

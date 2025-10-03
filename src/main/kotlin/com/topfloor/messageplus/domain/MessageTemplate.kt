@@ -8,6 +8,10 @@ import java.time.Instant
 import java.util.UUID
 
 @Entity
+@NamedEntityGraph(
+    name = "MessageTemplate.withTags",
+    attributeNodes = [NamedAttributeNode("tags")]
+)
 @Table(name = "message_template")
 class MessageTemplate(
     @Id

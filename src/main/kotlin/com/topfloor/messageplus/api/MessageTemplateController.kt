@@ -6,6 +6,8 @@ import com.topfloor.messageplus.api.dto.toDto
 import com.topfloor.messageplus.app.MessageTemplateService
 import com.topfloor.messageplus.app.TaggingService
 import jakarta.persistence.EntityNotFoundException
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -30,8 +32,19 @@ class MessageTemplateController(
     private val taggingService: TaggingService
 ) {
     @GetMapping
-    fun list(@RequestParam(required = false) q: String?): List<MessageTemplateDto> =
-        service.list(q).map { it.toDto() }
+    fun list(
+        @RequestParam(required = false) tagNames: List<String>?,
+        @RequestParam(defaultValue = "true") paged: Boolean,
+        @PageableDefault(size = 20) pageable: Pageable
+    ): ResponseEntity<*> {
+        return if (paged) {
+            val page = service.listByAllTagNames(tagNames, pageable)
+            ResponseEntity.ok(page)
+        } else {
+            val messages = service.listAllByAllTagNames(tagNames)
+            ResponseEntity.ok(messages)
+        }
+    }
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): MessageTemplateDto =
