@@ -48,7 +48,7 @@ class MessageTemplateController(
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): MessageTemplateDto =
-        service.get(id).toDto()
+        service.get(id)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

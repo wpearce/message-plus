@@ -15,7 +15,7 @@ data class MessageTemplateDto(
 )
 
 data class CreateUpdateMessageTemplateDto(
-    val name: String,
+    val title: String,
     val bodyPt: String,
     val bodyEn: String
 )

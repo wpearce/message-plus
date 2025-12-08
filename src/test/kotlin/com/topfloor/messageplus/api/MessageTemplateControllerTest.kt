@@ -1,7 +1,9 @@
 package com.topfloor.messageplus.api
 
 import com.ninjasquad.springmockk.MockkBean
+import com.topfloor.messageplus.api.dto.MessageTemplateDto
 import com.topfloor.messageplus.app.MessageTemplateService
+import com.topfloor.messageplus.app.TaggingService
 import com.topfloor.messageplus.domain.MessageTemplate
 import io.mockk.every
 import jakarta.persistence.EntityNotFoundException
@@ -24,11 +26,14 @@ class MessageTemplateControllerTest(
     @MockkBean
     lateinit var service: MessageTemplateService
 
+    @MockkBean
+    lateinit var taggingService: TaggingService
+
     @Test
     fun `GET by id returns 200 with dto`() {
         val now = Instant.parse("2025-09-01T12:00:00Z")
 
-        val entity = MessageTemplate(
+        val entity = MessageTemplateDto(
             id = UUID.randomUUID(),
             title = "ThankYou",
             bodyPt = "Thanks for choosing us!",
