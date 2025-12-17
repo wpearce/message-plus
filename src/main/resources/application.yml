@@ -25,3 +25,7 @@ spring:
 
 management:
   endpoints.web.exposure.include: health,info
+
+app:
+  openai:
+    api-key: ${OPENAI_API_KEY}

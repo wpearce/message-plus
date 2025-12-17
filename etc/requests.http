@@ -1,6 +1,6 @@
 @messageId =ade0445a-78ef-49f2-8589-ab5581f6db42
 @tagId=ef5bbb94-4b58-463c-b5d4-c3259232f016
-@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzY1NTcwODI1LCJpYXQiOjE3NjUxMzg4MjUsIm5iZiI6MTc2NTEzODgyNSwiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzUwMDQ0NTc0NDM5MjMxNjgwLWF0XzM1MDA0NDU3NDQzOTI5NzIxNiJ9.el1MmV8gMpVf07TR2C2CZvlmGR2gROiYmRrB1-etV9jx4FE_CRHoe0OrbExzl-WOuhko34Y21OMxyBoV5nNPXZychSC0rveUr_QMHLTFzHlCs2rU__JRVvw2TUBuC-pDd5KDSIj3WkpAtnyxMrELZw84zYja1Xfu_QJal4Wh2mZmslXIU-hj3n6um2_T3m1YkBoMurDxLbcmWwnmVZQeiYTKb3A88Jn0nJsHxKcaj6tMt1dQ6mfdcWvmtwJ6ZXEHUnRqsknHjZgcV6e3ssSFjhBH2LZ2nBv0ZITXuNHJ0b0SCO6SQdUka5dXHf6kQ0X6NpMk3oLbj22wqpm4ZphW1Q
+@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzNTEzNDM5Njk3NTEzNjU5OTEiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzY2Mzk0MzI4LCJpYXQiOjE3NjU5NjIzMjgsIm5iZiI6MTc2NTk2MjMyOCwiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzUxNDI2MTgzMzk0NDk1MDIwLWF0XzM1MTQyNjE4MzM5NDU2MDU1NiJ9.eJj7rHcDUJ9MfCNiFFnx0ZsufLoqo_rPKjH80zrbnLO0OvR8bLbYwaOK_oKR4UzRyzAMOE-IKvD-pSkIKCS9jo4YAeguxTmPDJ2-sIbX4-hYsxT2LQ6fiAsl1UZUqP3Jqc3KoSAFDCxnbzgpIhDEptHjRTIwfMa7Jznl2wNgwnkqT5_zD7CnJjm2WNIQsMWWsINqkYHECf4aVk65iNjLQCe_ovsSPw8afdRWhAcbrwrkmVQHzDIB3SbEXMW4MAzfWkhni7qxxU4M1E2pBZPqd9U7TyuML_I072Ian04B-Cpm7FTAU0Kudo8K3ZAasb_0wW48XbBemZ1nEfuehpbKCw
 
 ### get message
 GET {{host}}/api/templates/{{messageId}}
@@ -73,6 +73,10 @@ Authorization: Bearer {{token}}
 DELETE {{host}}/api/templates/{{messageId}}/tags/{{tagId}}
 Authorization: Bearer {{token}}
 
+#### AI
+GET {{host}}/api/ai
+Authorization: Bearer {{token}}
+
 ####
 GET {{host}}/actuator/health
 
@@ -80,5 +84,5 @@ GET {{host}}/actuator/health
 POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/device_authorization?client_id=337691614870836838&scope=pearce.oliver@gmail.com
 
 ####
-POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/token?grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=F7xGibC77BEenucZFgMG9w&client_id=337691614870836838
+POST https://messageplus-8ivdgq.us1.zitadel.cloud/oauth/v2/token?grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code=LGNqgxLDlIEFxxEsePgdaA&client_id=337691614870836838
 Content-Type:application/x-www-form-urlencoded

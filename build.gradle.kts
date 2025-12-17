@@ -1,14 +1,19 @@
 plugins {
-	kotlin("jvm") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
-	id("org.springframework.boot") version "3.5.5"
+    val kotlinVer = "2.2.21"
+	kotlin("jvm") version kotlinVer
+	kotlin("plugin.spring") version kotlinVer
+    kotlin("plugin.jpa") version kotlinVer
+    kotlin("plugin.serialization") version kotlinVer
+
+    id("org.springframework.boot") version "3.5.5"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("plugin.jpa") version "1.9.25"
 }
 
 group = "com.topfloor"
 version = "0.0.1-SNAPSHOT"
 description = "Message management the smart way"
+
+extra["kotlin-serialization.version"] = "1.8.1" // needed for koog
 
 java {
 	toolchain {
@@ -21,7 +26,9 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -36,7 +43,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation("ai.koog:koog-agents:0.5.4")
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
