@@ -1,5 +1,6 @@
 @messageId =ade0445a-78ef-49f2-8589-ab5581f6db42
 @tagId=ef5bbb94-4b58-463c-b5d4-c3259232f016
+@messageToImprove="Wellcome to our lovly home. Every imaginable amenitiy is here for u. THe beach is only a few minutes away and there are many reestaurants and shops closeby"
 @token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzNzY4NjI4MzYyNTI3NDAzMSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21lc3NhZ2VwbHVzLThpdmRncS51czEueml0YWRlbC5jbG91ZCIsInN1YiI6IjMzNzY4NjI4MzA1NTM3Mjk3NSIsImF1ZCI6WyIzMzc2ODY3MDY0Mjc4Mjg5MTEiLCIzMzc2OTE2MTQ4NzA4MzY4MzgiLCIzNTEzNDM5Njk3NTEzNjU5OTEiLCIzMzc2ODY2MDg0OTkyMTkxMTkiXSwiZXhwIjoxNzY2Mzk0MzI4LCJpYXQiOjE3NjU5NjIzMjgsIm5iZiI6MTc2NTk2MjMyOCwiY2xpZW50X2lkIjoiMzM3NjkxNjE0ODcwODM2ODM4IiwianRpIjoiVjJfMzUxNDI2MTgzMzk0NDk1MDIwLWF0XzM1MTQyNjE4MzM5NDU2MDU1NiJ9.eJj7rHcDUJ9MfCNiFFnx0ZsufLoqo_rPKjH80zrbnLO0OvR8bLbYwaOK_oKR4UzRyzAMOE-IKvD-pSkIKCS9jo4YAeguxTmPDJ2-sIbX4-hYsxT2LQ6fiAsl1UZUqP3Jqc3KoSAFDCxnbzgpIhDEptHjRTIwfMa7Jznl2wNgwnkqT5_zD7CnJjm2WNIQsMWWsINqkYHECf4aVk65iNjLQCe_ovsSPw8afdRWhAcbrwrkmVQHzDIB3SbEXMW4MAzfWkhni7qxxU4M1E2pBZPqd9U7TyuML_I072Ian04B-Cpm7FTAU0Kudo8K3ZAasb_0wW48XbBemZ1nEfuehpbKCw
 
 ### get message
@@ -28,7 +29,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "DELETE THIS",
+  "title": "DELETE THIS",
   "bodyPt": "Obrigado por sua preferencia",
   "bodyEn": "Thanks for choosing us!"
 }
@@ -73,9 +74,25 @@ Authorization: Bearer {{token}}
 DELETE {{host}}/api/templates/{{messageId}}/tags/{{tagId}}
 Authorization: Bearer {{token}}
 
-#### AI
-GET {{host}}/api/ai
+#### AI improve
+POST {{host}}/api/ai/improve
+Content-Type: application/json
 Authorization: Bearer {{token}}
+
+{
+  "model": "GPT5",
+  "prompt": {{messageToImprove}}
+}
+
+#### AI translate
+POST {{host}}/api/ai/translate
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "model": "GPT5",
+  "prompt": {{messageToImprove}}
+}
 
 ####
 GET {{host}}/actuator/health
