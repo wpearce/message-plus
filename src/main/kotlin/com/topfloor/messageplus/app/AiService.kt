@@ -24,7 +24,7 @@ class AiService(
                 promptExecutor = simpleOpenAIExecutor(props.apiKey),
                 llmModel = getModel(input.model),
                 temperature = 1.0,
-                systemPrompt = "You are a helpful assistant. Answer user questions concisely. Fix spelling and grammar errors, while keeping the general structure of the input",
+                systemPrompt = "Fix spelling and grammar errors, while keeping the general structure of the input. Always return only the improved input. If you find nothing to improve, return the input without changes",
             )
 
             val result = agent.run(input.prompt)
@@ -38,7 +38,7 @@ class AiService(
                 promptExecutor = simpleOpenAIExecutor(props.apiKey),
                 llmModel = getModel(input.model),
                 temperature = 1.0,
-                systemPrompt = "If the message is in english, translate it to portuguese. If it is in portuguese, translate it to english. If there are spelling or grammar errors, don't reproduce them in the translated string",
+                systemPrompt = "If the message is in english, translate it to portuguese. If it is in portuguese, translate it to english. If there are spelling or grammar errors, don't reproduce them in the translated string. Always return only the translated string",
             )
 
             val result = agent.run(input.prompt)
