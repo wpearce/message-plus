@@ -21,7 +21,7 @@ class MessageTemplateService(
 
     @Transactional(readOnly = true)
     fun list(q: String?): List<MessageTemplate> =
-        if (q.isNullOrBlank()) repo.findAll() else repo.findByTitleContainingIgnoreCase(q)
+        if (q.isNullOrBlank()) repo.findAllWithTags() else repo.findByTitleContainingIgnoreCase(q)
 
     @Transactional(readOnly = true)
     fun listByAllTagNames(tagNames: List<String>?, pageable: Pageable): Page<MessageTemplateDto> {
