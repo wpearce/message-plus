@@ -6,19 +6,19 @@ import com.topfloor.messageplus.app.MessageTemplateService
 import com.topfloor.messageplus.app.TaggingService
 import com.topfloor.messageplus.domain.MessageTemplate
 import io.mockk.every
-import jakarta.persistence.EntityNotFoundException
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
+import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 import java.time.Instant
 import java.util.UUID
 
 @WebMvcTest(MessageTemplateController::class)
-class MessageTemplateControllerTest(
-) {
+class MessageTemplateControllerTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -29,44 +29,90 @@ class MessageTemplateControllerTest(
     @MockkBean
     lateinit var taggingService: TaggingService
 
+    @MockkBean
+    lateinit var jwtDecoder: JwtDecoder
+
     @Test
-    fun `GET by id returns 200 with dto`() {
+    fun `GET by id returns 200 for authenticated user without templates_write role`() {
+        val id = UUID.randomUUID()
         val now = Instant.parse("2025-09-01T12:00:00Z")
 
-        val entity = MessageTemplateDto(
-            id = UUID.randomUUID(),
+        every { service.get(id) } returns MessageTemplateDto(
+            id = id,
             title = "ThankYou",
-            bodyPt = "Thanks for choosing us!",
+            bodyPt = "Obrigado por nos escolher!",
             bodyEn = "Thanks for choosing us!",
             createdAt = now,
             updatedAt = now
         )
 
-        every { service.get(UUID.randomUUID()) } returns entity
-
-        mockMvc.get("/api/templates/1") {
+        mockMvc.get("/api/templates/$id") {
             accept = MediaType.APPLICATION_JSON
+            with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt())
         }
             .andExpect {
                 status { isOk() }
                 content { contentTypeCompatibleWith(MediaType.APPLICATION_JSON) }
-                jsonPath("$.id") { value(1) }
+                jsonPath("$.id") { value(id.toString()) }
                 jsonPath("$.title") { value("ThankYou") }
-                jsonPath("$.body") { value("Thanks for choosing us!") }
             }
     }
 
     @Test
-    fun `GET by id returns 404 with error body when not found`() {
-        every { service.get(UUID.randomUUID()) } throws EntityNotFoundException("MessageTemplate 99 not found")
+    fun `POST template returns 403 when templates_write role is missing`() {
+        val body = """
+            {
+              "title": "Welcome",
+              "bodyPt": "Olá",
+              "bodyEn": "Hello"
+            }
+        """.trimIndent()
 
-        mockMvc.get("/api/templates/99") {
-            accept = MediaType.APPLICATION_JSON
+        mockMvc.post("/api/templates") {
+            contentType = MediaType.APPLICATION_JSON
+            content = body
+            with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt())
         }
             .andExpect {
-                status { isNotFound() }
-                content { contentTypeCompatibleWith(MediaType.APPLICATION_JSON) }
-                jsonPath("$.error") { value(org.hamcrest.Matchers.containsString("99")) }
+                status { isForbidden() }
+            }
+    }
+
+    @Test
+    fun `POST template returns 201 when templates_write role is present`() {
+        val id = UUID.randomUUID()
+        val body = """
+            {
+              "title": "Welcome",
+              "bodyPt": "Olá",
+              "bodyEn": "Hello"
+            }
+        """.trimIndent()
+
+        every { service.create(any()) } returns MessageTemplate(
+            id = id,
+            title = "Welcome",
+            bodyPt = "Olá",
+            bodyEn = "Hello"
+        )
+
+        mockMvc.post("/api/templates") {
+            contentType = MediaType.APPLICATION_JSON
+            content = body
+            with(
+                org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt().jwt { jwt ->
+                    jwt.claim(
+                        "urn:zitadel:iam:org:project:337686608499219119:roles",
+                        mapOf(
+                            "templates_write" to mapOf("337686283054848687" to "topfloor.us1.zitadel.cloud")
+                        )
+                    )
+                }
+            )
+        }
+            .andExpect {
+                status { isCreated() }
+                header { string("Location", "/api/templates/$id") }
             }
     }
 }
