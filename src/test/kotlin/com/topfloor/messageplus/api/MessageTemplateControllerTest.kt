@@ -4,11 +4,14 @@ import com.ninjasquad.springmockk.MockkBean
 import com.topfloor.messageplus.api.dto.MessageTemplateDto
 import com.topfloor.messageplus.app.MessageTemplateService
 import com.topfloor.messageplus.app.TaggingService
+import com.topfloor.messageplus.config.SecurityConfig
 import com.topfloor.messageplus.domain.MessageTemplate
 import io.mockk.every
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.test.web.servlet.MockMvc
@@ -18,6 +21,7 @@ import java.time.Instant
 import java.util.UUID
 
 @WebMvcTest(MessageTemplateController::class)
+@Import(SecurityConfig::class)
 class MessageTemplateControllerTest {
 
     @Autowired
@@ -76,6 +80,8 @@ class MessageTemplateControllerTest {
             .andExpect {
                 status { isForbidden() }
             }
+
+        verify(exactly = 0) { service.create(any()) }
     }
 
     @Test
