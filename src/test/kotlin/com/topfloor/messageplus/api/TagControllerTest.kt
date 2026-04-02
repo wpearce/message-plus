@@ -1,11 +1,9 @@
 package com.topfloor.messageplus.api
 
 import com.ninjasquad.springmockk.MockkBean
-import com.topfloor.messageplus.api.dto.MessageTemplateDto
-import com.topfloor.messageplus.app.MessageTemplateService
 import com.topfloor.messageplus.app.TaggingService
 import com.topfloor.messageplus.config.SecurityConfig
-import com.topfloor.messageplus.domain.MessageTemplate
+import com.topfloor.messageplus.domain.Tag
 import io.mockk.every
 import io.mockk.verify
 import org.junit.jupiter.api.Test
@@ -14,24 +12,21 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.security.oauth2.jwt.JwtDecoder
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
-import java.time.Instant
 import java.util.UUID
 
-@WebMvcTest(MessageTemplateController::class)
+@WebMvcTest(TagController::class)
 @Import(SecurityConfig::class)
-class MessageTemplateControllerTest {
+class TagControllerTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
 
     @MockkBean
-    lateinit var service: MessageTemplateService
-
-    @MockkBean
-    lateinit var taggingService: TaggingService
+    lateinit var service: TaggingService
 
     @MockkBean
     lateinit var jwtDecoder: JwtDecoder
@@ -39,43 +34,28 @@ class MessageTemplateControllerTest {
     @Test
     fun `GET by id returns 200 for authenticated user without templates_write role`() {
         val id = UUID.randomUUID()
-        val now = Instant.parse("2025-09-01T12:00:00Z")
+        val name1 = "first tag"
+        val name2 = "second tag"
 
-        every { service.get(id) } returns MessageTemplateDto(
-            id = id,
-            title = "ThankYou",
-            bodyPt = "Obrigado por nos escolher!",
-            bodyEn = "Thanks for choosing us!",
-            createdAt = now,
-            updatedAt = now
-        )
+        every { service.listAllTags() } returns listOf(Tag(id= UUID.randomUUID(), name=name1), Tag(id=UUID.randomUUID(), name=name2))
 
-        mockMvc.get("/api/templates/$id") {
+        mockMvc.get("/api/tags") {
             accept = MediaType.APPLICATION_JSON
-            with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt())
+            with(SecurityMockMvcRequestPostProcessors.jwt())
         }
             .andExpect {
                 status { isOk() }
                 content { contentTypeCompatibleWith(MediaType.APPLICATION_JSON) }
-                jsonPath("$.id") { value(id.toString()) }
-                jsonPath("$.title") { value("ThankYou") }
+                jsonPath("$[0].name") { value(name1) }
+                jsonPath("$[1].name") { value(name2) }
             }
     }
 
     @Test
-    fun `POST template returns 403 when templates_write role is missing`() {
-        val body = """
-            {
-              "title": "Welcome",
-              "bodyPt": "Olá",
-              "bodyEn": "Hello"
-            }
-        """.trimIndent()
-
-        mockMvc.post("/api/templates") {
+    fun `Create tag returns 403 when templates_write role is missing`() {
+        mockMvc.post("/api/tags") {
             contentType = MediaType.APPLICATION_JSON
-            content = body
-            with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt())
+            with(SecurityMockMvcRequestPostProcessors.jwt())
         }
             .andExpect {
                 status { isForbidden() }
@@ -85,28 +65,24 @@ class MessageTemplateControllerTest {
     }
 
     @Test
-    fun `POST template returns 201 when templates_write role is present`() {
+    fun `Create template returns 201 when templates_write role is present`() {
         val id = UUID.randomUUID()
         val body = """
             {
-              "title": "Welcome",
-              "bodyPt": "Olá",
-              "bodyEn": "Hello"
+                "name": "AVALIAÇÃO"
             }
         """.trimIndent()
 
-        every { service.create(any()) } returns MessageTemplate(
-            id = id,
-            title = "Welcome",
-            bodyPt = "Olá",
-            bodyEn = "Hello"
+        every { service.create(any()) } returns Tag(
+            id,
+            name = "AVALIAÇÃO"
         )
 
-        mockMvc.post("/api/templates") {
+        mockMvc.post("/api/tags") {
             contentType = MediaType.APPLICATION_JSON
             content = body
             with(
-                org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt().jwt { jwt ->
+                SecurityMockMvcRequestPostProcessors.jwt().jwt { jwt ->
                     jwt.claim(
                         "urn:zitadel:iam:org:project:337686608499219119:roles",
                         mapOf(
@@ -118,7 +94,7 @@ class MessageTemplateControllerTest {
         }
             .andExpect {
                 status { isCreated() }
-                header { string("Location", "/api/templates/$id") }
+                header { string("Location", "/api/tags/$id") }
             }
     }
 }
