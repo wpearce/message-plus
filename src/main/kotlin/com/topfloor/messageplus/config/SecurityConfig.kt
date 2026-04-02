@@ -26,6 +26,11 @@ class SecurityConfig {
                 it.requestMatchers(HttpMethod.DELETE, "/api/templates/**")
                     .access { authentication, _ -> AuthorizationDecision(hasTemplatesWriteRole(authentication.get().principal)) }
 
+                it.requestMatchers(HttpMethod.POST, "/api/tags/**")
+                    .access { authentication, _ -> AuthorizationDecision(hasTemplatesWriteRole(authentication.get().principal)) }
+                it.requestMatchers(HttpMethod.DELETE, "/api/tags/**")
+                    .access { authentication, _ -> AuthorizationDecision(hasTemplatesWriteRole(authentication.get().principal)) }
+
                 it.anyRequest().authenticated()
             }
             .oauth2ResourceServer { it.jwt { } }  // expect Bearer JWTs
