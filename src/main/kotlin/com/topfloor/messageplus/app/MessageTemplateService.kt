@@ -54,21 +54,16 @@ class MessageTemplateService(
 
     @Transactional
     fun update(id: UUID, req: CreateUpdateMessageTemplateDto): MessageTemplate {
-        val template = get(id)
+        val template = repo.findById(id).orElseThrow { EntityNotFoundException("Template $id not found") }
         // prevent duplicate names on other rows
         if (!template.title.equals(req.title, ignoreCase = true) && repo.existsByTitleIgnoreCase(req.title)) {
             error("Message Template name already exists: ${req.title}")
         }
-        val updatedMessage =
-            MessageTemplate(
-                id = template.id,
-                title = req.title.trim(),
-                bodyPt = req.bodyPt,
-                bodyEn = req.bodyEn,
-                createdAt = template.createdAt,
-                updatedAt = Instant.now()
-            )
-        return repo.save(updatedMessage)
+        template.title = req.title.trim()
+        template.bodyPt = req.bodyPt
+        template.bodyEn = req.bodyEn
+        template.updatedAt = Instant.now()
+        return repo.save(template)
     }
 
     @Transactional
