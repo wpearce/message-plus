@@ -53,7 +53,7 @@ class MessageTemplateService(
     }
 
     @Transactional
-    fun update(id: UUID, req: CreateUpdateMessageTemplateDto): MessageTemplate {
+    fun update(id: UUID, req: CreateUpdateMessageTemplateDto): MessageTemplateDto {
         val template = repo.findById(id).orElseThrow { EntityNotFoundException("Template $id not found") }
         // prevent duplicate names on other rows
         if (!template.title.equals(req.title, ignoreCase = true) && repo.existsByTitleIgnoreCase(req.title)) {
@@ -63,7 +63,7 @@ class MessageTemplateService(
         template.bodyPt = req.bodyPt
         template.bodyEn = req.bodyEn
         template.updatedAt = Instant.now()
-        return repo.save(template)
+        return repo.save(template).toDto()
     }
 
     @Transactional

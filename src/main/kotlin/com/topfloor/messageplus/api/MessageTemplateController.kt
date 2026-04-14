@@ -61,7 +61,7 @@ class MessageTemplateController(
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: UUID, @RequestBody req: CreateUpdateMessageTemplateDto): MessageTemplateDto =
-        service.update(id, req).toDto()
+        service.update(id, req)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
