@@ -35,7 +35,7 @@ class MessageTemplateController(
     fun list(
         @RequestParam(required = false) tagNames: List<String>?,
         @RequestParam(defaultValue = "true") paged: Boolean,
-        @PageableDefault(size = 20) pageable: Pageable
+        @PageableDefault(size = 10) pageable: Pageable
     ): ResponseEntity<*> {
         return if (paged) {
             val page = service.listByAllTagNames(tagNames, pageable)
